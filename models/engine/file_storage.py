@@ -71,12 +71,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """ method to retrieve one object """
-        klas = self.all(cls)
-        obj_key = f"{cls}.{id}"
-        if obj_key in klas:
-            return (klas[obj_key])
-        else:
-            return None
+        if cls:
+            obj = self.__session.query(cls).get(id)
+            return obj
+        return None
 
     def count(self, cls=None):
         """ method to count number of objects in storage """
