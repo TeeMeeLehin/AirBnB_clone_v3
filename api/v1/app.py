@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ setting up flask api """
-from flask import Flask, request, Blueprint
+from flask import Flask, request, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -14,6 +14,14 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    """ custom error 404 json message"""
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return (response)
 
 
 if __name__ == '__main__':
