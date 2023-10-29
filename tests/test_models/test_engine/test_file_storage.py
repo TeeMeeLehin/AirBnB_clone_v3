@@ -113,3 +113,13 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_existing_object(self):
+        """ Test if get() returns an existing object """
+        new_user = User()
+        nid = new_user.id
+        new_user.save()
+        storage = FileStorage()
+        storage.reload()
+        result = storage.get(User, nid)
+        self.assertEqual(result, new_user)
