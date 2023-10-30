@@ -84,7 +84,7 @@ def update_place(place_id):
     if place_data is None:
         abort(400, "Not a JSON")
 
-    keys_to_ignore = ["id", "created_at", "updated_at"]
+    keys_to_ignore = ["id", "user_id", "city_id", "created_at", "updated_at"]
     for key in keys_to_ignore:
         if key in place_data:
             del place_data[key]
