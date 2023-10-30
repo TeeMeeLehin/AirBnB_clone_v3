@@ -66,7 +66,7 @@ def create_place(city_id):
     if city_key not in cities:
         abort(404)
 
-    user_key = f"{User}.{place_data["user_id"]}"
+    user_key = f"{User}.{place_data['user_id']}"
     if user_key not in users:
         abort(404)
 
