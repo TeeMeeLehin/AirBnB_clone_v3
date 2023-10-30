@@ -11,7 +11,7 @@ from flask import jsonify, abort, request
 @app_views.route('/amenities', strict_slashes=False, methods=['GET'])
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['GET'])
-def amenities(amenity_id):
+def amenities(amenity_id=None):
     """ returns list of amenities in storage """
     amenities = storage.all(Amenity)
     if amenity_id is None:
@@ -24,7 +24,7 @@ def amenities(amenity_id):
         if amenity is not None:
             return jsonify(amenity.to_dict())
         else:
-            abort(400)
+            abort(404)
 
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
@@ -57,7 +57,7 @@ def create_amenity():
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['PUT'])
-def update_amenity(city_id):
+def update_amenity(amenity_id):
     """ update a amenity object """
     amenity = storage.get(Amenity, amenity_id)
     amenity_data = request.get_json()
