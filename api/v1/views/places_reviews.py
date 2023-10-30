@@ -57,8 +57,8 @@ def create_review(place_id):
     if review_data is None:
         abort(400, "Not a JSON")
 
-    if "name" not in review_data:
-        abort(400, "Missing name")
+    if "text" not in review_data:
+        abort(400, "Missing text")
 
     if "user_id" not in review_data:
         abort(400, "Missing user_id")
@@ -67,7 +67,7 @@ def create_review(place_id):
     if place_key not in places:
         abort(404)
 
-    user_key = "User.{}".format(place_data['user_id'])
+    user_key = "User.{}".format(review_data['user_id'])
     if user_key not in users:
         abort(404)
 
@@ -78,7 +78,7 @@ def create_review(place_id):
 
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
-def update_review(place_id):
+def update_review(review_id):
     """ update a review object """
     review = storage.get(Review, review_id)
     review_data = request.get_json()
