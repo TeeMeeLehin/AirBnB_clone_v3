@@ -32,7 +32,7 @@ def delete_state(state_id):
     if state is not None:
         storage.delete(state)
         storage.save()
-        return {}
+        return {}, 200
     else:
         abort(404)
 
