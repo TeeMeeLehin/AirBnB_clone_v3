@@ -2,6 +2,7 @@
 """ api script for state objects """
 from api.v1.views import app_views
 from models.city import City
+from models.state import State
 from models import storage
 from flask import jsonify, abort, request
 
@@ -46,7 +47,7 @@ def delete_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False,
                  methods=['POST'])
-def create_city():
+def create_city(state_id):
     """ create a new city """
     city_data = request.get_json()
     if city_data is None:
@@ -56,6 +57,7 @@ def create_city():
         abort(400, "Missing name")
 
     new_city = City(**city_data)
+    new_city.state_id = state_id
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
